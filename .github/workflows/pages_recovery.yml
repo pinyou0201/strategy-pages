@@ -2,10 +2,13 @@ name: Verify and recover GitHub Pages
 
 on:
   pull_request:
+  push:
+    branches: [master]
+    paths:
+      - 'index.html'
+      - '.github/workflows/pages_recovery.yml'
+      - '.github/scripts/recover_pages.py'
   workflow_dispatch:
-  schedule:
-    # GitHub-managed Pages deploys can fail on transient 503/OIDC outages.
-    - cron: '17,47 * * * *'
 
 permissions:
   contents: read
