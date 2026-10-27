@@ -120,7 +120,8 @@ def main():
     result = recover(
         expected, sha, live=public_page,
         current_head=lambda: source_head(token),
-        request_build=lambda: rebuild(token))
+        request_build=lambda: rebuild(token),
+        warmup=150 if os.environ.get("GITHUB_EVENT_NAME") == "push" else 30)
     print(f"PAGES_RECOVERY_{result.upper()}")
     return 0
 
