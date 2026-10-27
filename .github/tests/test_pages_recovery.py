@@ -20,6 +20,14 @@ class Clock:
 
 
 class PagesRecoveryTests(unittest.TestCase):
+    def test_event_driven_recovery_keeps_manual_dispatch(self):
+        workflow = (Path(__file__).resolve().parents[1] / "workflows" / "pages_recovery.yml").read_text()
+        self.assertIn("  workflow_dispatch:", workflow)
+        self.assertIn("  push:", workflow)
+        self.assertIn("    branches: [master]", workflow)
+        self.assertIn("      - 'index.html'", workflow)
+        self.assertNotIn("  schedule:", workflow)
+
     def test_exact_public_bytes_need_no_rebuild(self):
         count = []
         result = recover_pages.recover(
